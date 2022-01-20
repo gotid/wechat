@@ -50,11 +50,28 @@ func (ctx *Context) SetComponentAccessToken(verifyTicket string) (*ComponentAcce
 }
 
 // ComponentAccessToken 从缓存中获取第三方平台访问令牌。
-func (ctx *Context) ComponentAccessToken() (string, error) {
-	key := fmt.Sprintf("component_access_token_%s", ctx.AppID)
+func (ctx *Context) ComponentAccessToken() (token string, err error) {
+	key := cache.KeyComponentAccessToken(ctx.AppID)
 	val := ctx.Cache.Get(key)
-	if val == nil {
-		return "", fmt.Errorf("暂无第三方平台访问令牌缓存，10分钟后再试")
+	if v, ok := val.(string); ok {
+		token = v
 	}
-	return val.(string), nil
+
+	if token == "" {
+		ticket, err := ctx.ComponentVerifyTicket()
+		if err != nil {
+			return "", err
+		}
+		at, err := ctx.SetComponentAccessToken(ticket)
+		if err != nil {
+			return "", err
+		}
+		token = at.AccessToken
+	}
+
+	if token == "" {
+		return "", fmt.Errorf("平台令牌初始化中，请10分钟后再试")
+	}
+
+	return token, nil
 }

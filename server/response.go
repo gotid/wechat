@@ -2,12 +2,12 @@ package server
 
 import (
 	"encoding/xml"
+	"fmt"
 
 	"reflect"
 	"strconv"
 	"time"
 
-	"github.com/gotid/god/lib/logx"
 	"github.com/gotid/wechat/msg"
 	"github.com/gotid/wechat/util"
 )
@@ -34,7 +34,7 @@ func (s *Server) buildResponse(resp *msg.Response) (err error) {
 // 构建开放平台场景的响应类型和消息
 func (s *Server) buildOpenResponse(resp *msg.Response) error {
 	if s.debug {
-		logx.Debugf("开放平台回复体 => %#v \n", resp)
+		fmt.Printf("开放平台回复体 => %#v \n", resp)
 	}
 
 	// 在发送回复前，记录微信推送的平台验证票据

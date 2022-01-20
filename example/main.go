@@ -22,6 +22,7 @@ func init() {
 }
 
 func main() {
+	http.HandleFunc("/favicon.ico", favorite)
 	http.HandleFunc("/", index)
 	err := http.ListenAndServe(":8081", nil)
 	if err != nil {
@@ -29,12 +30,16 @@ func main() {
 	}
 }
 
+func favorite(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(w, r)
+}
+
 func index(w http.ResponseWriter, r *http.Request) {
-	wc := wechat.New(ctx)
-	server := wc.NewServer(w, r)
+	wc := wechat.Get(ctx)
+	server := wc.Server(w, r)
 
 	// 设置常规消息钩子
-	server.SetMsgHandler(func(m msg.Msg) *msg.Response {
+	server.SetMsgHandler(func(ctx *context.Context, m msg.Msg) *msg.Response {
 		return &msg.Response{
 			Scene: msg.ResponseSceneKefu,
 			Type:  msg.ResponseTypeXML,

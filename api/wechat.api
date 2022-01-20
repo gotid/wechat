@@ -1,0 +1,20 @@
+type (
+	PlatformReq {
+		PlatformID string `json:"platformID" v:"required"`
+	}
+)
+
+
+@server(
+	prefix: api/wechat/open/
+	group: open
+)
+service wechat-api {
+	@doc(summary: "第三方平台授权事件通知")
+	@handler Notify
+	post /:platformID/notify (PlatformReq)
+	
+	@doc(summary: "第三方平台授权事件通知")
+	@handler Auth
+	get /:platformID/auth (PlatformReq)
+}

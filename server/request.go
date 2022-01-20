@@ -12,13 +12,13 @@ import (
 func (s *Server) handleRequest() (reply *msg.Response, err error) {
 	s.requestRaw, err = ioutil.ReadAll(s.Request.Body)
 	if err != nil {
-		return nil, fmt.Errorf("解析微信请求体失败，错误：%v", err)
+		return nil, fmt.Errorf("读取微信请求体失败，错误：%v", err)
 	}
 
 	req := requestModel{}
 	err = xml.Unmarshal(s.requestRaw, &req)
 	if err != nil {
-		err = fmt.Errorf("无效的微信XML请求体：data=%s, err=%v", s.requestRaw, err)
+		err = fmt.Errorf("解析微信XML请求体失败：data=%s, err=%v", s.requestRaw, err)
 		return
 	}
 
@@ -77,7 +77,7 @@ func (s *Server) handleMsg() (reply *msg.Response, err error) {
 
 	// 调用自定义消息钩子生成回复内容
 	err = xml.Unmarshal(s.requestRaw, &s.requestMsg)
-	reply = s.msgHandler(s.requestMsg)
+	reply = s.msgHandler(s.Context, s.requestMsg)
 	return
 }
 

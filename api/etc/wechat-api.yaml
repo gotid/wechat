@@ -1,0 +1,15 @@
+Name: wechat-api
+Host: 0.0.0.0
+Port: 8888
+Timeout: 200000
+
+WeChat:
+  AppID: "wxbef357be217c23c5"
+  AppSecret: "403d127716317ea23c8db1a1107b14fc"
+  Token: "imola1999zhuke2012dhome2020"
+  EncodingAESKey: "imola1999azhuke2012adhome2020a18611914900aa"
+
+MySQL: root:asdfasdf@tcp(localhost:3306)/wechat_platform?charset=utf8mb4&parseTime=true
+Cache:
+  - Host: vps:6382
+    Password: 4a5d4787a82c660ee18719f51ff40d9a669a4958

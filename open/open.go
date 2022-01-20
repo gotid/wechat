@@ -11,13 +11,13 @@ type Open struct {
 	*context.Context
 }
 
-// New 返回一个新的开放平台控制器
-func New(ctx *context.Context) *Open {
+// NewPlatform 返回一个新的开放平台控制器
+func NewPlatform(ctx *context.Context) *Open {
 	return &Open{ctx}
 }
 
-// GetWeApp 获取指定的代小程序
-func (o *Open) GetWeApp(appID string, refreshToken string) *WeApp {
+// WeApp 获取指定的代小程序
+func (o *Open) WeApp(appID string, refreshToken string) *WeApp {
 	if appID == "" || refreshToken == "" {
 		return nil
 	}

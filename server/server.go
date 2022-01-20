@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/gotid/god/lib/logx"
+	"fmt"
 	"github.com/gotid/wechat/context"
 	"github.com/gotid/wechat/msg"
 )
@@ -10,16 +10,16 @@ import (
 type Server struct {
 	*context.Context
 
-	debug        bool                                // 是否调试
-	openID       string                              // 用户 openid
-	msgHandler   func(message msg.Msg) *msg.Response // 消息钩子
-	payHandler   func() *msg.Response                // 支付钩子
-	requestRaw   []byte                              // 微信请求原始数据
-	requestMsg   msg.Msg                             // 解析后微信请求数据
-	responseType msg.ResponseType                    // 相应类型 string|xml|json
-	responseMsg  interface{}                         // 响应数据
-	isSafeMode   bool                                // 是否为加密模式
-	random       []byte                              // 密文中的随机值
+	debug        bool                                          // 是否调试
+	openID       string                                        // 用户 openid
+	msgHandler   func(*context.Context, msg.Msg) *msg.Response // 消息钩子
+	payHandler   func() *msg.Response                          // 支付钩子
+	requestRaw   []byte                                        // 微信请求原始数据
+	requestMsg   msg.Msg                                       // 解析后微信请求数据
+	responseType msg.ResponseType                              // 相应类型 string|xml|json
+	responseMsg  interface{}                                   // 响应数据
+	isSafeMode   bool                                          // 是否为加密模式
+	random       []byte                                        // 密文中的随机值
 	nonce        string
 	timestamp    int64
 }
@@ -37,7 +37,7 @@ func (s *Server) Debug(v bool) {
 }
 
 // SetMsgHandler 设置常规消息钩子
-func (s *Server) SetMsgHandler(h func(m msg.Msg) *msg.Response) {
+func (s *Server) SetMsgHandler(h func(*context.Context, msg.Msg) *msg.Response) {
 	s.msgHandler = h
 }
 
@@ -58,7 +58,7 @@ func (s *Server) Serve() error {
 
 	// 打印原始请求信息
 	if s.debug {
-		logx.Debug("微信原始请求信息：", string(s.requestRaw))
+		fmt.Printf("微信原始请求信息：%s\n\n", string(s.requestRaw))
 	}
 
 	// 构建微信响应体
@@ -69,7 +69,7 @@ func (s *Server) Serve() error {
 func (s *Server) Send() {
 	// 打印调试信息
 	if s.debug {
-		logx.Debugf("待发送给微信的响应消息 => %v \n", s)
+		fmt.Printf("待发送给微信的响应消息 => %+v \n", s)
 	}
 
 	// 跳过空白响应

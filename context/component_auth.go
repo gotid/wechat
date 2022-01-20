@@ -10,21 +10,10 @@ import (
 	"github.com/gotid/wechat/util"
 )
 
-// AuthType 要授权的帐号类型
-type AuthType int
-
-func (at AuthType) Int() int {
-	return int(at)
-}
-
 const (
 	urlCreatePreAuthCode  = "https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=%s"
 	urlComponentLoginPage = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=2"
 	urlBindComponent      = "https://mp.weixin.qq.com/safe/bindcomponent?action=bindcomponent&auth_type=2&no_scan=1&component_appid=%s&pre_auth_code=%s&redirect_uri=%s#wechat_redirect"
-
-	AuthTypeMP  AuthType = 1 // 商户点击链接后，手机端仅展示公众号
-	AuthTypeWA  AuthType = 2 // 仅展示小程序
-	AuthTypeAll AuthType = 3 // 公众号和小程序都展示
 )
 
 // Auth 跳转至授权网页。
@@ -35,6 +24,7 @@ func (ctx *Context) Auth(w http.ResponseWriter, r *http.Request, redirectURI str
 		return err
 	}
 
+	r.Header.Set("Referer", r.RequestURI)
 	http.Redirect(w, r, uri, 302)
 	return nil
 }
