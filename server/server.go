@@ -1,7 +1,7 @@
 package server
 
 import (
-	"git.zc0901.com/go/god/lib/logx"
+	"github.com/gotid/god/lib/logx"
 	"github.com/gotid/wechat/context"
 	"github.com/gotid/wechat/msg"
 )

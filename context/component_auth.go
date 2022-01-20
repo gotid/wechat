@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"git.zc0901.com/go/god/lib/g"
+	"github.com/gotid/god/lib/g"
 	"github.com/gotid/wechat/util"
 )
 

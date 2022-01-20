@@ -2,7 +2,7 @@ package context
 
 import (
 	"fmt"
-	"git.zc0901.com/go/god/lib/logx"
+	"github.com/gotid/god/lib/logx"
 	"github.com/gotid/wechat/cache"
 )
 

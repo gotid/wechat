@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"git.zc0901.com/go/god/lib/logx"
+	"github.com/gotid/god/lib/logx"
 	"github.com/gotid/wechat/msg"
 	"github.com/gotid/wechat/util"
 )

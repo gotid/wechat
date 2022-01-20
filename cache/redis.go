@@ -3,8 +3,8 @@ package cache
 import (
 	"time"
 
-	"git.zc0901.com/go/god/lib/gconv"
-	"git.zc0901.com/go/god/lib/store/kv"
+	"github.com/gotid/god/lib/gconv"
+	"github.com/gotid/god/lib/store/kv"
 )
 
 // Redis 提供一个基于 Redis 的缓存。

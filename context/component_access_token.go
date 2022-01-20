@@ -3,7 +3,7 @@ package context
 import (
 	"encoding/json"
 	"fmt"
-	"git.zc0901.com/go/god/lib/g"
+	"github.com/gotid/god/lib/g"
 	"github.com/gotid/wechat/cache"
 	"github.com/gotid/wechat/util"
 	"time"
